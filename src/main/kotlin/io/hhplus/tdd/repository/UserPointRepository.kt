@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserPointRepository {
     fun findById(id: Long): UserPoint
+
+    fun save(userPoint: UserPoint): UserPoint
 }

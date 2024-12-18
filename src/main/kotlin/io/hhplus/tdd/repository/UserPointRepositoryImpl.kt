@@ -14,4 +14,11 @@ class UserPointRepositoryImpl(
         }
         return userPointTable.selectById(id)
     }
+
+    override fun save(userPoint: UserPoint): UserPoint {
+        if (userPoint.id <= 0) {
+            throw IllegalArgumentException("id is invalid.")
+        }
+        return userPointTable.insertOrUpdate(id = userPoint.id, amount = userPoint.point)
+    }
 }
