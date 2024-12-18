@@ -1,4 +1,4 @@
-package io.hhplus.tdd.point
+package io.hhplus.tdd.domain
 
 data class UserPoint(
     val id: Long,

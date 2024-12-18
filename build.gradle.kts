@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     id("jacoco")
+
+    id("org.jlleitschuh.gradle.ktlint").version("12.1.0")
 }
 
 allprojects {
