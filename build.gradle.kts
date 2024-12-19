@@ -26,6 +26,8 @@ dependencies {
     implementation(libs.spring.boot.starter.web)
     annotationProcessor(libs.spring.boot.configuration.processor)
     testImplementation(libs.spring.boot.starter.test)
+
+    testImplementation("io.rest-assured:rest-assured")
 }
 
 // about source and compilation
