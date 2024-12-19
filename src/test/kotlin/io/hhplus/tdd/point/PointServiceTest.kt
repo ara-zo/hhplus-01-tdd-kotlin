@@ -9,6 +9,7 @@ import io.hhplus.tdd.repository.UserPointRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -28,8 +29,14 @@ class PointServiceTest {
     @Mock
     private lateinit var pointHistoryRepository: PointHistoryRepository
 
-    @InjectMocks
     private lateinit var pointService: PointService
+
+    private val lockService = FakeLockService()
+
+    @BeforeEach
+    fun setUp() {
+        pointService = PointService(userPointRepository, pointHistoryRepository, lockService)
+    }
 
     @Test
     @DisplayName("아이디로 포인트 조회")
