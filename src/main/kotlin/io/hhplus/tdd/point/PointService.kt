@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service
 @Service
 class PointService(
     private var userPointRepository: UserPointRepository,
-    private var pointHistoryRepository: PointHistoryRepository
+    private var pointHistoryRepository: PointHistoryRepository,
+
+    // ConcurrentHashMap, ReentrantLock를 이용한 lock 구현
+    private val lockService: LockService
 ){
 
     // 포인트 조회
@@ -25,29 +28,32 @@ class PointService(
 
     // 포인트 충전
     fun charge(id: Long, amount: Long): UserPoint {
-        // 1. 포인트 조회
-        val userPoint = userPointRepository.findById(id)
+        return lockService.lock(id) {
+            // 1. 포인트 조회
+            val userPoint = userPointRepository.findById(id)
 
-        // 2. 포인트 충전
-        val result = userPointRepository.save(userPoint.charge(amount))
+            // 2. 포인트 충전
+            val result = userPointRepository.save(userPoint.charge(amount))
 
-        // 3. 포인트 충전 내역 등록
-        pointHistoryRepository.save(id, TransactionType.CHARGE, amount, System.currentTimeMillis())
+            // 3. 포인트 충전 내역 등록
+            pointHistoryRepository.save(id, TransactionType.CHARGE, amount, System.currentTimeMillis())
 
-        return result
+            result
+        }
     }
 
-    // 포인트 사용
     fun use(id: Long, amount: Long): UserPoint {
-        // 1. 포인트 조회
-        val userPoint = userPointRepository.findById(id)
+        return lockService.lock(id) {
+            // 1. 포인트 조회
+            val userPoint = userPointRepository.findById(id)
 
-        // 2. 포인트 사용
-        val result = userPointRepository.save(userPoint.use(amount))
+            // 2. 포인트 사용
+            val result = userPointRepository.save(userPoint.use(amount))
 
-        // 3. 포인트 충전 내역 등록
-        pointHistoryRepository.save(id, TransactionType.USE, amount, System.currentTimeMillis())
+            // 3. 포인트 충전 내역 등록
+            pointHistoryRepository.save(id, TransactionType.USE, amount, System.currentTimeMillis())
 
-        return result
+            result
+        }
     }
 }
