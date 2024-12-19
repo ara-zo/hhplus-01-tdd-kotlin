@@ -1,5 +1,6 @@
 package io.hhplus.tdd.point
 
+import io.hhplus.tdd.any
 import io.hhplus.tdd.domain.PointHistory
 import io.hhplus.tdd.domain.TransactionType
 import io.hhplus.tdd.domain.UserPoint
@@ -11,7 +12,9 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.BDDMockito.*
+import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.`when`
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
