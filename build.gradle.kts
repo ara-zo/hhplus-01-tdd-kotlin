@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     id("jacoco")
+
+    id("org.jlleitschuh.gradle.ktlint").version("12.1.0")
 }
 
 allprojects {
@@ -24,6 +26,8 @@ dependencies {
     implementation(libs.spring.boot.starter.web)
     annotationProcessor(libs.spring.boot.configuration.processor)
     testImplementation(libs.spring.boot.starter.test)
+
+    testImplementation("io.rest-assured:rest-assured")
 }
 
 // about source and compilation
