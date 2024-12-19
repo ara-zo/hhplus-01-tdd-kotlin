@@ -17,10 +17,10 @@ class PointHistoryRepositoryImpl(
         return pointHistoryTable.selectAllByUserId(id)
     }
 
-    override fun save(id: Long, type: TransactionType, point: Long, timeMillis: Long): PointHistory {
+    override fun save(id: Long, type: TransactionType, amount: Long, timeMillis: Long): PointHistory {
         if (id <= 0) {
             throw IllegalArgumentException("id is invalid.")
         }
-        return pointHistoryTable.insert(id = id, transactionType = type, amount = point, updateMillis = System.currentTimeMillis())
+        return pointHistoryTable.insert(id = id, transactionType = type, amount = amount, updateMillis = System.currentTimeMillis())
     }
 }

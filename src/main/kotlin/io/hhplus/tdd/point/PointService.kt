@@ -37,4 +37,17 @@ class PointService(
         return result
     }
 
+    // 포인트 사용
+    fun use(id: Long, amount: Long): UserPoint {
+        // 1. 포인트 조회
+        val userPoint = userPointRepository.findById(id)
+
+        // 2. 포인트 사용
+        val result = userPointRepository.save(userPoint.use(amount))
+
+        // 3. 포인트 충전 내역 등록
+        pointHistoryRepository.save(id, TransactionType.USE, amount, System.currentTimeMillis())
+
+        return result
+    }
 }
